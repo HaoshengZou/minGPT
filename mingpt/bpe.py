@@ -177,6 +177,30 @@ class Encoder:
             bpe_idx.extend(token_ix)
         return bpe_idx
 
+    def encode_equation(self, text):
+        """ string goes in, list of integers comes out """
+        bpe_idx = []
+        # pre-tokenize the input text into string tokens (words, roughly speaking)
+        tokens = re.findall(self.pat, text)
+        # process each token into BPE integers
+        for token in tokens:
+            # encode the token as a bytes (b'') object
+            token_bytes = token.encode('utf-8')
+            # translate all bytes to their unicode string representation and flatten
+            token_translated = ''.join(self.byte_encoder[b] for b in token_bytes)
+            # perform all the applicable bpe merges according to self.bpe_ranks
+            token_merged = self.bpe(token_translated).split(' ')
+
+            # split eg ')*'
+            if not token.isdigit() and len(token) > 1:
+                token_merged = [c for c in token]
+
+            # translate all bpe tokens to integers
+            token_ix = [self.encoder[bpe_token] for bpe_token in token_merged]
+            # extend our running list of all output integers
+            bpe_idx.extend(token_ix)
+        return bpe_idx
+
     def encode_and_show_work(self, text):
         """ debugging function, same as encode but returns all intermediate work """
         bpe_idx = []

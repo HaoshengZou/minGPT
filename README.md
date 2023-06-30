@@ -1,6 +1,44 @@
 
 # minGPT
 
+## 24 points roadmap
+
+demo / adder
+
+- SFT
+
+raw dataset https://github.com/imkuang/game_24/blob/master/answer.txt
+
+process dataset
+    tokenizer
+        4 digits, space separated --> equation
+    GPT-style Dataset
+    batching
+    prompt? ignore
+
+train / val (/ test) split
+
+model ~100M
+
+variable-length, padding mask!
+新想到：计算符后序表示法（应该有对应术语），这样，有解的case全都是固定长度 4 + 3 表示解
+    9 6 - 10 * 6 -
+
+
+- reward model
+
+不学了，就用规则，规则考虑细分：符合规则，再计算正确得到24
+
+
+- RL
+
+
+- 问题
+输出如何截断
+blocksize好像可以改小？pos emb也只是nn.Embedding，但load参数应该要load原size，再hack一下实际blocksize
+
+
+
 ![mingpt](mingpt.jpg)
 
 A PyTorch re-implementation of [GPT](https://github.com/openai/gpt-2), both training and inference. minGPT tries to be small, clean, interpretable and educational, as most of the currently available GPT model implementations can a bit sprawling. GPT is not a complicated model and this implementation is appropriately about 300 lines of code (see [mingpt/model.py](mingpt/model.py)). All that's going on is that a sequence of indices feeds into a [Transformer](https://arxiv.org/abs/1706.03762), and a probability distribution over the next index in the sequence comes out. The majority of the complexity is just being clever with batching (both across examples and over sequence length) for efficiency.
