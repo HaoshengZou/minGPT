@@ -7,22 +7,22 @@ demo / adder
 
 - SFT
 
-raw dataset https://github.com/imkuang/game_24/blob/master/answer.txt
+  - raw dataset https://github.com/imkuang/game_24/blob/master/answer.txt
 
-process dataset
-    tokenizer
-        4 digits, space separated --> equation
-    GPT-style Dataset
-    batching
-    prompt? ignore
+  - process dataset
+    - tokenizer
+        -  4 digits, space separated --> equation
+    - GPT-style Dataset
+    - batching
+    - prompt? ignore
 
-train / val (/ test) split
+  - train / val (/ test) split
 
-model ~100M
+  - model ~100M
 
-variable-length, padding mask!
-新想到：计算符后序表示法（应该有对应术语），这样，有解的case全都是固定长度 4 + 3 表示解
-    9 6 - 10 * 6 -
+  - variable-length, padding mask!
+  新想到：计算符后序表示法（应该有对应术语），这样，有解的case全都是固定长度 4 + 3 表示解
+      9 6 - 10 * 6 -
 
 
 - reward model
@@ -34,8 +34,8 @@ variable-length, padding mask!
 
 
 - 问题
-输出如何截断
-blocksize好像可以改小？pos emb也只是nn.Embedding，但load参数应该要load原size，再hack一下实际blocksize
+  - 输出如何截断
+  - blocksize好像可以改小？pos emb也只是nn.Embedding，但load参数应该要load原size，再hack一下实际blocksize
 
 
 
